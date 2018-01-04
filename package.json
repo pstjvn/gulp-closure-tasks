@@ -1,0 +1,17 @@
+{
+  "name": "gulp-closure-tasks",
+  "version": "1.0.0",
+  "description": "Closure build tasks to share in projects",
+  "main": "index.js",
+  "keywords": [
+    "closure"
+  ],
+  "author": "Peter StJ",
+  "license": "ISC",
+  "dependencies": {
+    "google-closure-compiler": "^20171203.0.0",
+    "del": "^2.2.1",
+    "gulp": "gulpjs/gulp#4.0",
+    "gulp-sourcemaps": "^2.6.1"
+  }
+}
