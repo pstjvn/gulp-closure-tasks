@@ -69,14 +69,18 @@ const constructCompilerOpts = (ns) => {
 /**
  * Generates utilities to work with closure sources.
  *
- * @param {Object=} gulpInstance Optionally an instance to work with,
+ * @param {Object} gulpInstance Optionally an instance to work with,
  * if not provided the default one will be used (#4.0).
+ * @param {Object} gccInstance The google closure compiler's gulp interface.
+ * We require this to be injected in order to not depend on this package's 
+ * version of gcc, but intead allow the developer to select one and use it.
  * @param {boolean=} debug If we should print out which file we will be
  * using to build the final bundle.
  * @return {!Object}
  */
-module.exports = function(gulpInstance, debug) {
-  let gulp = gulpInstance || gulplocal;
+module.exports = function(gulpInstance, gccInstance, debug) {
+  const gulp = gulpInstance;
+  const gcc = gccInstance;
   const isDebugModeOn = !!debug;
 
   /**

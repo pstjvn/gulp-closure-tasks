@@ -9,7 +9,6 @@
   "author": "Peter StJ",
   "license": "ISC",
   "dependencies": {
-    "google-closure-compiler": "^20171203.0.0",
     "del": "^2.2.1",
     "gulp-sourcemaps": "^2.6.1"
   }
