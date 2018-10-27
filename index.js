@@ -1,7 +1,6 @@
 const del = require('del');
 const fs = require('fs');
 const gcc = require('google-closure-compiler').gulp();
-const gulplocal = require('gulp');
 const smap = require('gulp-sourcemaps');
 
 
@@ -14,7 +13,7 @@ const Location = {
   BASE: './',
   BUILD_DIR: './build/',
   FILELIST: 'nsfiles.txt',
-  CL_SRC: 'js/**.js',
+  CL_SRC: 'js/**/*.js',
   CL_LIB_SRC: 'node_modules/google-closure-library/**/*.js',
   TMP_DIR: '.tmp/',
   EMPTY_FILE: 'notused.js',
@@ -43,6 +42,12 @@ const ClosureCompilerCollectFilesOpts = {
  * @private {!Object}
  */
 const ClosureCompilerBuildOps = {
+  dependency_mode: 'STRICT',
+  define: 'goog.DEBUG=false',
+  process_closure_primitives: true,
+  use_types_for_optimization: true,
+  warning_level: 'VERBOSE',
+  compilation_level: 'ADVANCED',
   entry_point: 'goog:',
   flagfile: 'options/compile.ini',
   js_output_file: '.min.js'
@@ -50,7 +55,7 @@ const ClosureCompilerBuildOps = {
 
 
 /**
- * Generates a new optoins object specific to a closure based namespace.
+ * Generates a new options object specific to a closure based namespace.
  * @param {string} ns
  * @return {!Object}
  */
@@ -62,14 +67,17 @@ const constructCompilerOpts = (ns) => {
 
 
 /**
- * Generates utils to work with closure courses.
+ * Generates utilities to work with closure sources.
  *
  * @param {Object=} gulpInstance Optionally an instance to work with,
  * if not provided the default one will be used (#4.0).
+ * @param {boolean=} debug If we should print out which file we will be
+ * using to build the final bundle.
  * @return {!Object}
  */
-module.exports = function(gulpInstance) {
+module.exports = function(gulpInstance, debug) {
   let gulp = gulpInstance || gulplocal;
+  const isDebugModeOn = !!debug;
 
   /**
    * Register task for collecting file list for closure entrypoint.
@@ -135,6 +143,7 @@ module.exports = function(gulpInstance) {
         opts.push(val);
       }
       filelist.forEach(_ => {
+        if (isDebugModeOn) console.log('Will be using: ' + _);
         opts.push('--js');
         opts.push(_);
       });
