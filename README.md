@@ -18,7 +18,7 @@ _gulpfile.js_
 
 ```js
 const gulp = require('gulp');
-const gcc = require('google-closure-compiler').gulp;
+const gcc = require('google-closure-compiler').gulp();
 
 // Last argument is should we print out the files used in the build.
 const gccTaskCreator = require('gulp-closure-tasks')(gulp, gcc, true);
