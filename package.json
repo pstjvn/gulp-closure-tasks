@@ -1,6 +1,6 @@
 {
   "name": "gulp-closure-tasks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Closure build tasks to share in projects",
   "main": "index.js",
   "keywords": [
@@ -11,7 +11,6 @@
   "dependencies": {
     "google-closure-compiler": "^20171203.0.0",
     "del": "^2.2.1",
-    "gulp": "gulpjs/gulp#4.0",
     "gulp-sourcemaps": "^2.6.1"
   }
 }
