@@ -33,7 +33,6 @@ const ClosureCompilerCollectFilesOpts = {
   js_output_file: Location.EMPTY_FILE
 };
 
-
 /**
  * Flags for the build job in the compiler.
  * Note that most flags are provided via the compile.ini file and not from
@@ -43,6 +42,7 @@ const ClosureCompilerCollectFilesOpts = {
  */
 const ClosureCompilerBuildOps = {
   dependency_mode: 'STRICT',
+  // By default make production build.
   define: 'goog.DEBUG=false',
   process_closure_primitives: true,
   use_types_for_optimization: true,
@@ -72,7 +72,7 @@ const constructCompilerOpts = (ns) => {
  * @param {Object} gulpInstance Optionally an instance to work with,
  * if not provided the default one will be used (#4.0).
  * @param {Object} gccInstance The google closure compiler's gulp interface.
- * We require this to be injected in order to not depend on this package's 
+ * We require this to be injected in order to not depend on this package's
  * version of gcc, but intead allow the developer to select one and use it.
  * @param {boolean=} debug If we should print out which file we will be
  * using to build the final bundle.
@@ -141,6 +141,11 @@ module.exports = function(gulpInstance, gccInstance, debug) {
             break;
           case 'js_output_file':
             val = entrypoint + val;
+            break;
+          case 'define':
+            if (val.indexOf('goog.DEBUG') === 0) {
+              val = isDebugModeOn ? 'goog.DEBUG=true' : 'goog.DEBUG=false';
+            }
             break;
         }
         opts.push(`--${key}`);
